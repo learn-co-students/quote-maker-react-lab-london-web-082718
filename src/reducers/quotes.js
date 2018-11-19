@@ -9,18 +9,18 @@ export default (state = [], action) => {
       return [...state, action.quote]
 
     case "REMOVE_QUOTE":
-      idx = state.findIndex(quote => quote.id === action.id);
+      idx = state.findIndex(quote => quote.id === action.quoteId);
       return [...state.slice(0, idx), ...state.slice(idx + 1)]
         
     case "UPVOTE_QUOTE":
-      idx = state.findIndex(quote => quote.id === action.id);
+      idx = state.findIndex(quote => quote.id === action.quoteId);
       quote = {...state[idx], votes: state[idx].votes + 1 }
       return [...state.slice(0, idx), quote, ...state.slice(idx + 1)]
 
     case "DOWNVOTE_QUOTE":
-      console.log("ACTION", action)
-      idx = state.findIndex(quote => quote.id === action.id);
-      quote = {...state[idx], votes: state[idx].votes - 1 }
+      idx = state.findIndex(quote => quote.id === action.quoteId);
+      quote = state[idx]
+      quote = {...quote, votes: quote.votes === 0 ? 0 : quote.votes - 1}
       return [...state.slice(0, idx), quote, ...state.slice(idx + 1)]
 
     default:
